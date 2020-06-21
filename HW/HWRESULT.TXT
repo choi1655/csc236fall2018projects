@@ -1,0 +1,13 @@
+CSC23x:  Homework Grades    (code=2-55577-4) Ver 580110
+Student:                 Choi,                 John 
+Created: 10/22/18 Updated:  10/24 22:20:20  
+
+HW#  Started        Status         Grade
+HW5                                000               
+HW6                                000               
+HW7  10/22/18       D 10/22 00:53  100               
+HW8  10/24/18       D 10/24 22:20  100               
+VER=Y002021G2D0P00I1K0K0S0:0:01 H122100V00/04000000020
+
+End of file     
+-

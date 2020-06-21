@@ -1,0 +1,151 @@
+
+To download MASM follow these steps.
+
+These instructions assume you will be using a directory C:\MASM611
+
+If you are doing something different then you need to
+- modify the process described
+- modify the file new-vars.bat
+For example if you are using your Eos account then that system uses the
+k: drive and everywhere we have c: you need to change that to k:
+
+
+1.  Make a directory on your computer named: masm611
+    It must be off the root directory of your system.
+    For example c:\masm611
+
+2.  Go to the wrap directory.
+
+3.  Click on the file masm611.exe
+
+4.  Save that file in the c:\masm611 directory you created.
+
+5.  Go to the c:\masm611 directory in a DOS box.
+
+6.  Type: masm611 -d
+
+7.  This will unpack all the files into the correct sub-directories.
+
+8.  We will assume that you wish to do your development work in a directory 
+    named c:\pc23x, so create that directory and change to that directory.
+
+9.  Copy the file new-vars.bat from c:\masm611 to your pc23x working directory.
+    You can use this DOS command:  copy  c:\masm611\new-vars.bat
+
+10. Make sure that new-vars.bat refers to the correct disk drive.
+    New-vars.bat assumes the directory with the tools is c:\masm611
+    If that is not correct, you need to edit new-vars.bat so that it matches
+    your system. If you are using Eos then change c: to k:
+
+    Before you can use MASM you need to run the new-vars batch file.
+    Type: new-vars.bat
+
+    This will add the MASM directories into your path.
+    You need to do this each time you want to use MASM,
+    or you need to update your system to do it automatically.
+
+
+
+This next section will test your installataion
+
+
+
+*** Assemble, Link, and Run Sample "Hello World" Program ***
+
+    1. Get MASM source code for the "Hello World" program.
+       It is also in the wrap directory.
+
+    2. Save hellom.asm file to your \pc23x directory
+
+    3. Open a DOS window
+       Go to your \pc23x directory
+       If you have not already done so, type: new-vars.bat
+
+    4. Assemble the source:
+       ml /c /Zi /Fl hellom.asm
+
+    5. Link the object file:
+       link /CO hellom.obj
+
+       You will be prompted for link options Just press the Enter key.
+
+       Run File [hellom.exe]:
+       List File [nul.map]:
+       Libraries [.lib]:
+       Definition File [nul.def]:
+
+    6. To run the program, type: hellom
+
+
+
+*** Possible Error Messages ***
+
+    1. If you have **not** gotten new-vars correct then when you try to
+       use MASM you will get an error message that looks like one of these.
+
+          "Bad command or file name"
+
+          "ML is not recognized as an internal or external command
+
+       Make sure that new-vars.bat refers to the correct disk drive.
+       New-vars.bat assumes the directory with the tools is c:\masm611
+       If that is not correct, you need to edit new-vars.bat so that it matches
+       your system. If you are using Eos then change c: to k:
+
+       Before you can use MASM you need to run the new-vars batch file.
+
+         Type: new-vars.bat
+
+       This will add the MASM directories into your path.
+       You need to do this **each** time you want to use MASM,
+       or you need to update your system to do it automatically.
+
+
+    2. If you get the error message "Out of environment space".
+
+       Some information needed to run MASM is kept in a memory structure
+       called the environment space.  If you exhaust this memory, you need
+       to make it larger.  This will differ on every version of Windows.
+
+       Here is one example from Windows XP.
+
+       Create a shortcut to the MS-DOS Prompt on your desktop.
+       Right click the mouse on the shortcut icon and then left click the mouse on Properties.
+       Under "Target:" it will have %SystemRoot%\system32\cmd.exe 
+       Add   /e:1024   to the end so it now looks like   %SystemRoot%\system32\cmd.exe /e:1024
+       Click on okay
+
+
+
+*** Other Possible Problems  ***
+
+    1. If you are running TASM on an NT derivative of Windows (NT, 2000, XP)
+
+       You must make a change to the file CONFIG.NT.  Add the
+       following line to that file ...  actually it is probably there
+       but has been converted to a comment by preceeding it with REM,
+       so just remove the REM.
+
+       REM   ntcmdprompt     (convert this)
+             ntcmdprompt     (to this)
+
+    2. The mouse does not work in a DOS box
+
+       If you are using an NT derivative of Windows (NT, 2000, XP), then
+       for the mouse to work under DOS, you must do either one of these:
+
+       Turn off the Quick Edit Mode.
+
+          Right click on blue title box of the DOS window.
+          Select Properties.  Turn off the Quick Edit Mode
+
+       Run DOS in full screen mode.
+
+          Right click on blue title box of the DOS window.
+          Select Properties.  Under Display Options select full screen.
+
+    3. Do not use long path names. Paths are limited to 128 characters.
+       Paths such as the one below will not work.
+
+       C:\Users\DAL\Documents\School_Related\NCState\Classes\csc234-236\z_dev\HelloWorld
+

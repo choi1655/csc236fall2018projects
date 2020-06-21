@@ -1,0 +1,135 @@
+Test date: 11/05/18  11:35:53 
+The number of times you used the grading program is 4 
+In the business world, your customer replaces the grading program. 
+The goal is a correct program with the fewest grading attempts. 
+RLC Grading System Version 4.0
+Student: St#1=Choi                 St#2t=McAllister           Type=Team                
+Grading and testing history log
+       User Test.    Date: 11/03/18  20:39:31  1            Display      
+       User Test.    Date: 11/03/18  20:40:53  1            Display      
+       User Test.    Date: 11/03/18  21:48:45  1            Display      
+       User Test.    Date: 11/03/18  24:34:15  1            Display      
+       User Test.    Date: 11/03/18  26:38:03  1            Display      
+       User Test.    Date: 11/03/18  26:39:20  2            Display      
+       User Test.    Date: 11/03/18  26:39:27  3            Display      
+       User Test.    Date: 11/03/18  26:40:59  1            Display      
+       User Test.    Date: 11/03/18  27:19:57  1            Display      
+       User Test.    Date: 11/03/18  27:26:24  2            Display      
+       User Test.    Date: 11/03/18  27:26:47  3            Display      
+       User Test.    Date: 11/03/18  27:26:54  1            Display      
+       User Test.    Date: 11/03/18  27:29:50  1            Display      
+       User Test.    Date: 11/03/18  27:29:54  2            Display      
+       User Test.    Date: 11/03/18  27:33:48  3            Display      
+       User Test.    Date: 11/03/18  27:34:15  2            Display      
+       User Test.    Date: 11/03/18  27:34:17  1            Display      
+       User Test.    Date: 11/03/18  28:55:35  1            Display      
+       User Test.    Date: 11/03/18  31:17:36  1            Display      
+       User Test.    Date: 11/03/18  31:17:49  1            Display      
+       User Test.    Date: 11/03/18  31:17:57  1            Display      
+       User Test.    Date: 11/03/18  31:19:45  1            Display      
+       User Test.    Date: 11/03/18  31:21:47  1            Display      
+       User Test.    Date: 11/03/18  31:24:20  1            Display      
+       User Test.    Date: 11/03/18  31:28:01  1            Display      
+       User Test.    Date: 11/03/18  31:31:19  1            Display      
+       User Test.    Date: 11/03/18  31:33:14  1            Display      
+       User Test.    Date: 11/03/18  31:36:13  1            Display      
+       User Test.    Date: 11/03/18  31:40:42  1            Display      
+       User Test.    Date: 11/03/18  31:46:00  1            Display      
+       User Test.    Date: 11/03/18  31:47:28  1            Display      
+       User Test.    Date: 11/03/18  31:51:23  1            Display      
+       User Test.    Date: 11/03/18  31:54:17  1            Display      
+       User Test.    Date: 11/04/18  23:22:05  1            Display      
+       User Test.    Date: 11/04/18  23:40:32  1            Display      
+       User Test.    Date: 11/04/18  23:40:34  2            Display      
+       User Test.    Date: 11/04/18  23:40:37  3            Display      
+       User Test.    Date: 11/04/18  23:49:18  1            Display      
+       User Test.    Date: 11/04/18  23:52:05  1            Display      
+       User Test.    Date: 11/04/18  23:54:43  1            Display      
+       User Test.    Date: 11/04/18  24:14:43  1            Display      
+       User Test.    Date: 11/04/18  24:21:41  1            Display      
+       User Test.    Date: 11/04/18  24:34:47  1            Display      
+       User Test.    Date: 11/04/18  24:41:04  1            Display      
+       User Test.    Date: 11/04/18  24:50:13  1            Display      
+       User Test.    Date: 11/05/18  00:56:53  1            Display      
+       User Test.    Date: 11/05/18  03:51:48  1            Display      
+       User Test.    Date: 11/05/18  03:52:59  2            Display      
+       User Test.    Date: 11/05/18  03:53:03  3            Display      
+   *** Grading Run.  Date: 11/05/18  03:55:32 
+       User Test.    Date: 11/05/18  03:56:21  2            Display      
+       User Test.    Date: 11/05/18  03:56:24  1            Display      
+   *** Grading Run.  Date: 11/05/18  03:56:26 
+       User Test.    Date: 11/05/18  03:58:23  3            Display      
+       User Test.    Date: 11/05/18  03:58:27  2            Display      
+       User Test.    Date: 11/05/18  03:58:29  1            Display      
+       User Test.    Date: 11/05/18  03:58:32  3            Display      
+       User Test.    Date: 11/05/18  03:58:35  2            Display      
+       User Test.    Date: 11/05/18  03:58:42  1            Display      
+   *** Grading Run.  Date: 11/05/18  03:58:56 
+       User Test.    Date: 11/05/18  11:18:40  1            Display      
+       User Test.    Date: 11/05/18  11:19:05  1            Display      
+       User Test.    Date: 11/05/18  11:21:21  1            Display      
+       User Test.    Date: 11/05/18  11:25:08  1            Display      
+       User Test.    Date: 11/05/18  11:28:18  1            Display      
+       User Test.    Date: 11/05/18  11:33:00  1            Display      
+       User Test.    Date: 11/05/18  11:35:43  1            Display      
+       User Test.    Date: 11/05/18  11:35:50  2            Display      
+   *** Grading Run.  Date: 11/05/18  11:35:53 
+
+Testing 1 dimension compression
+Your output is correct
+Your output is correct
+Your output is correct
+
++  Your executed instruction count for tests run = 00016389
++   
++  Target instructions executed for tests run is:
++  20 points 00000 - 07999 
++  15 points 08000 - 09999 
++  10 points 10000 - 11999 
++   5 points 12000 - 13999 
++   0 points 14001 +       
++                          
+
+++ Grade ++    0 = Points earned for code executed efficiency!
+
+1 dimension compression is working
+
+The following is credit earned for 1-dim compression
+
+++ Grade ++  040 = Points earned for correct answers.
+
+-> We are now analyzing your source code. You will be graded on
+the number of instructions you wrote to solve this problem.
+The target for the number of executable instructions written is:
+ 00 -  44 = 20 points 
+ 45 -  49 = 15 points 
+ 50 -  54 = 10 points 
+ 55 -  59 =  5 points 
+ 60+      =  0 points 
+Your actual counts are:
+Lines ....... 134    Comments ...  69    Labels .......  10   
+Directives ..   6    Variables ..   3    Executables ..  46    McCabe ..   7 
+++ Grade ++   15 = Points earned for code written efficiency.  
+
+-> Analyzing program documentation. 
+The heuristic algorithms used may have problems with your specific code. 
+Contact the instructor if you detect a problem with your grade. 
+DOCPH-0015 The program header format is adequate. 
+DOCHB-0.85 Use of code block headers is adequate. 
+DOCLC-0.96 Use of line comments is adequate. 
+++ Grade ++   20 = Points earned for correct documentation.    
+
+-> Calculating the total grade for the program.                  
+This grade is subject to adjustment by the instructor.           
+This grade will be reduced by any late submission penalty.       
+++ Grade ++   75 = Total grade generated by the Grading System.  
+
+-> Statistics on testing and grading                             
+    65  = Number of user tests.                                  
+     4  = Number of grading runs to get the program working.     
+     0  = Number of grading runs to improve efficiency or documentation. 
+
++- atyC:6&}xC7;&k~C6&juiC86&zuzC=;&Zkyz&jgzk@&7756;57>&&77@9;@;9&
+
+Building the file rlc.ans for electronic submission...
+

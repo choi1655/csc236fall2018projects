@@ -1,0 +1,268 @@
+Test date: 10/22/18  07:25:01 
+The number of times you used the grading program is 9 
+In the business world, your customer replaces the grading program. 
+The goal is a correct program with the fewest grading attempts. 
+Maze Grading System Version 4.0
+Student: St#1=Choi                 St#2t=McAllister           Type=Team                
+Grading and testing history log
+       User Test.    Date: 10/21/18  20:23:20  maze.01      -            
+       User Test.    Date: 10/21/18  20:26:02  r            -            
+       User Test.    Date: 10/21/18  20:26:51  maze.01      -            
+       User Test.    Date: 10/21/18  20:31:37  r            -            
+       User Test.    Date: 10/21/18  20:33:23  maze.01      -            
+       User Test.    Date: 10/21/18  20:41:51  maze.01      -            
+       User Test.    Date: 10/21/18  20:46:20  maze.01      -            
+       User Test.    Date: 10/21/18  20:50:43  maze.01      -            
+       User Test.    Date: 10/21/18  20:57:21  maze.01      -            
+       User Test.    Date: 10/21/18  21:00:20  maze.01      -            
+       User Test.    Date: 10/21/18  21:11:36  maze.01      -            
+       User Test.    Date: 10/21/18  21:14:31  maze.01      -            
+       User Test.    Date: 10/21/18  21:14:36  r            -            
+       User Test.    Date: 10/21/18  21:22:43  maze.01      -            
+       User Test.    Date: 10/21/18  21:23:28  maze.01      -            
+       User Test.    Date: 10/21/18  21:25:26  maze.01      -            
+       User Test.    Date: 10/21/18  21:37:59  maze.01      -            
+       User Test.    Date: 10/21/18  21:40:43  maze.01      -            
+       User Test.    Date: 10/21/18  21:41:43  r            -            
+       User Test.    Date: 10/21/18  21:42:39  r            -            
+       User Test.    Date: 10/21/18  21:47:07  maze.01      -            
+       User Test.    Date: 10/21/18  22:14:56  maze.01      -            
+       User Test.    Date: 10/21/18  22:15:01  maze.01      -            
+       User Test.    Date: 10/21/18  22:15:05  maze.01      -            
+       User Test.    Date: 10/21/18  22:17:12  maze.01      -            
+       User Test.    Date: 10/21/18  22:17:15  maze.01      -            
+       User Test.    Date: 10/21/18  22:17:21  maze.02      -            
+       User Test.    Date: 10/21/18  22:33:04  maze.02      -            
+       User Test.    Date: 10/22/18  00:26:03  maze.01      -            
+       User Test.    Date: 10/22/18  00:26:15  maze.01      -            
+       User Test.    Date: 10/22/18  00:35:07  maze.01      -            
+       User Test.    Date: 10/22/18  00:37:18  maze.01      -            
+       User Test.    Date: 10/22/18  00:38:14  maze.01      -            
+       User Test.    Date: 10/22/18  00:40:59  maze.01      -            
+       User Test.    Date: 10/22/18  00:42:43  maze.01      -            
+       User Test.    Date: 10/22/18  00:43:57  maze.01      -            
+       User Test.    Date: 10/22/18  01:11:27  maze.01      -            
+       User Test.    Date: 10/22/18  01:14:23  maze.01      -            
+       User Test.    Date: 10/22/18  01:15:03  maze.01      -            
+       User Test.    Date: 10/22/18  01:16:56  maze.01      -            
+       User Test.    Date: 10/22/18  01:28:23  maze.01      -            
+       User Test.    Date: 10/22/18  01:31:11  maze.01      -            
+       User Test.    Date: 10/22/18  01:33:06  maze.01      -            
+       User Test.    Date: 10/22/18  01:42:21  maze.01      -            
+       User Test.    Date: 10/22/18  01:42:52  maze.01      -            
+       User Test.    Date: 10/22/18  01:47:17  maze.01      -            
+       User Test.    Date: 10/22/18  02:08:33  maze.01      -            
+       User Test.    Date: 10/22/18  02:10:07  maze.01      -            
+       User Test.    Date: 10/22/18  02:10:53  maze.01      -            
+       User Test.    Date: 10/22/18  02:11:32  maze.01      -            
+       User Test.    Date: 10/22/18  02:17:54  maze.01      -            
+       User Test.    Date: 10/22/18  02:20:37  maze.01      -            
+       User Test.    Date: 10/22/18  02:27:06  maze.01      -            
+       User Test.    Date: 10/22/18  02:31:34  maze.01      -            
+       User Test.    Date: 10/22/18  02:35:27  maze.01      -            
+       User Test.    Date: 10/22/18  02:38:07  maze.01      -            
+       User Test.    Date: 10/22/18  02:48:24  maze.01      -            
+       User Test.    Date: 10/22/18  02:48:55  maze.01      -            
+       User Test.    Date: 10/22/18  02:49:05  maze.01      -            
+       User Test.    Date: 10/22/18  02:51:15  maze.01      -            
+       User Test.    Date: 10/22/18  02:51:50  maze.01      -            
+       User Test.    Date: 10/22/18  02:54:26  maze.01      -            
+       User Test.    Date: 10/22/18  02:55:41  maze.01      -            
+       User Test.    Date: 10/22/18  02:55:52  maze.01      -            
+       User Test.    Date: 10/22/18  03:03:59  maze.01      -            
+       User Test.    Date: 10/22/18  03:06:09  maze.01      -            
+       User Test.    Date: 10/22/18  03:06:18  maze.01      -            
+       User Test.    Date: 10/22/18  03:06:51  maze.01      -            
+       User Test.    Date: 10/22/18  04:18:38  maze.01      -            
+       User Test.    Date: 10/22/18  04:19:11  maze.01      -            
+       User Test.    Date: 10/22/18  05:44:06  maze.01      -            
+       User Test.    Date: 10/22/18  05:49:14  maze.01      -            
+       User Test.    Date: 10/22/18  06:19:13  maze.01      -            
+       User Test.    Date: 10/22/18  06:21:54  maze.01      -            
+       User Test.    Date: 10/22/18  06:22:56  maze.02      -            
+       User Test.    Date: 10/22/18  06:23:29  maze.03      -            
+       User Test.    Date: 10/22/18  06:24:26  maze.04      -            
+       User Test.    Date: 10/22/18  06:25:05  maze.05      -            
+       User Test.    Date: 10/22/18  06:31:47  maze.01      -            
+       User Test.    Date: 10/22/18  06:32:17  r            -            
+   *** Grading Run.  Date: 10/22/18  06:34:39 
+       User Test.    Date: 10/22/18  06:39:40  maze.01      -            
+   *** Grading Run.  Date: 10/22/18  06:40:09 
+       User Test.    Date: 10/22/18  06:43:37  maze.01      -            
+   *** Grading Run.  Date: 10/22/18  06:44:06 
+       User Test.    Date: 10/22/18  06:54:11  maze.01      -            
+   *** Grading Run.  Date: 10/22/18  06:54:42 
+       User Test.    Date: 10/22/18  06:58:34  maze.01      -            
+   *** Grading Run.  Date: 10/22/18  06:59:03 
+       User Test.    Date: 10/22/18  07:07:51  maze.01      -            
+   *** Grading Run.  Date: 10/22/18  07:09:02 
+       User Test.    Date: 10/22/18  07:12:40  maze.01      -            
+   *** Grading Run.  Date: 10/22/18  07:13:31 
+       User Test.    Date: 10/22/18  07:18:50  maze.01      -            
+   *** Grading Run.  Date: 10/22/18  07:19:21 
+       User Test.    Date: 10/22/18  07:24:31  maze.01      -            
+   *** Grading Run.  Date: 10/22/18  07:25:01 
+Testing against the nextval specification
+Test completed okay
+Testing against non symetrical maze
+Test completed okay
+Testing against a set of random mazes
+Test completed okay
+Testing for correct operation and efficiency
+Building the maze....
+Congratulations! Your mouse has traversed the maze.
+ 
+++ Grade ++   50 = Points earned for correct answers.
+Your executed instruction count = 000006091
+
+++ Grade ++    0 = Points earned for code executed efficiency.
+Target executed: 15 = 0-4999  10 = 5000-5249  5 = 5250-5499  0 = 5500+ 
+
+++ Grade ++   10 = Points for code written. Your count is:  45.
+Target written : 15 = 00-40  10 = 41-45  5 = 46-50  0 = 51+
+
+-> Analyzing program documentation. 
+The heuristic algorithms used may have problems with your specific code. 
+Contact the instructor if you detect a problem with your grade. 
+DOCPH-0025 The program header format is adequate. 
+DOCHB-0.53 Use of code blocks headers is marginal, -5 points. 
+           Programs must be broken into small functional blocks of code.     
+           Each block must have a header that describes the code's function. 
+           See the Program Documentation Requirements on the WEB.            
+DOCLC-1.00 Use of line comments is adequate. 
+++ Grade ++   15 = Points earned for correct documentation.    
+
+-> Calculating the total grade for the program.                  
+This grade is subject to adjustment by the instructor.           
+This grade will be reduced by any late submission penalty.       
+++ Grade ++   75 = Total grade generated by the Grading System.  
+
+-> Statistics on testing and grading                             
+    88  = Number of user tests.                                  
+     9  = Number of grading runs to get the program working.     
+     0  = Number of grading runs to improve efficiency or documentation. 
+
++- atyC;6&}xC6&k~C6&juiC7;&zuzC=;&Zkyz&jgzk@&7658857>&&6=@8;@67&
+
+
+
+Building the file maze.ans for electronic submission...
+
+;--------------------------------------------------------------------
+;
+;   NEXTVAL SUBROUTINE    ***** MASM VERSION *****
+;
+;
+;   NEXTVAL.  Find next mouse move in an array 15 by 30.
+;            We can move into a position if its contents is blank ( 20h ).
+;
+;   Input:     Calling sequence is:
+;                  x    pointer   si
+;                  y    pointer   di
+;                  dir  pointer   bx
+;                  maze pointer   bp
+;
+;   Output:    x,y,dir modified in caller's data segment
+;
+;   To use, type this command:  NEXTVAL
+;
+;   Author:    John Choi, Eric McAllister
+;
+;   Date       Reason
+;   ----       ------
+; 10/22/2018   Original version
+;
+;---------------------------------------
+         .model    small               ; 64k code and 64k data
+         .8086                         ; only allow 8086 instructions
+         public    nextval             ; allow extrnal programs to call
+;---------------------------------------
+         .data
+;---------------------------------------
+thirty   db 30                         ; variable constant thirty
+;---------------------------------------
+         .code                         ; start the code segment
+;---------------------------------------
+; Save any modified registers
+; Calculates offset and saves it in ax
+;---------------------------------------
+nextval:
+        push bp                        ; save bp register
+        push ax                        ; save ax register
+        push cx                        ; save cx register
+        mov ax, 0                      ; This is
+        mov cl, [si]                   ; part of
+        mov ch, [di]                   ; offset
+        mov al, ch                     ; calculation
+        sub al, 1                      ; code
+;---------------------------------------
+; Finalizes the step to calculating
+; result for offset
+;---------------------------------------
+        mul [thirty]                   ; multiply y-1 to 30
+        mov ch, 0                      ; get cx ready for addition
+        sub al, 1                      ; handle the memory access issue
+        add ax, cx                     ; add ch to offset
+        add bp, ax                     ; add bp by the offset
+;---------------------------------------
+; This part determines behaviors for
+; current direction
+;---------------------------------------
+        cmp byte ptr[bx], 1            ; If direction is 1
+        je testn                       ; jump to testn
+        cmp byte ptr[bx], 2            ; If direction is 2
+        je teste                       ; jump to teste
+        cmp byte ptr[bx], 3            ; If direction is 3
+        je tests                       ; jump to tests
+        cmp byte ptr[bx], 4            ; If direction is 4
+        je testw                       ; jump to testw
+;---------------------------------------
+; Code to make 1 move in the maze
+; Handles north movement
+;---------------------------------------
+testn:
+        cmp byte ptr ds:[bp - 30], 20h ; if location is empty
+        jne teste                      ; if not empty space, goto teste
+        sub byte ptr[di], 1            ; decrement y
+        mov byte ptr[bx], 4            ; set direction of travel to north
+        jmp exit                       ; jump to exit
+;---------------------------------------
+; Handles east movement
+;---------------------------------------
+teste:
+        cmp byte ptr ds:[bp + 1], 20h  ; if not empty space
+        jne tests                      ; goto tests
+        add byte ptr[si], 1            ; increment x
+        mov byte ptr[bx], 1            ; set direction of travel to east
+        jmp exit                       ; jump to exit
+;---------------------------------------
+; Handles south movement
+;---------------------------------------
+tests:
+        cmp byte ptr ds:[bp + 30], 20h ; if not empty space
+        jne testw                      ; goto testw
+        add byte ptr[di], 1            ; increment y
+        mov byte ptr[bx], 2            ; set direction of travel to south
+        jmp exit                       ; jump to exit
+;---------------------------------------
+; Handles west movement
+;---------------------------------------
+testw:
+        cmp byte ptr ds:[bp - 1], 20h  ; if not empty space
+        jne testn                      ; goto testn
+        sub byte ptr[si], 1            ; decrement x value
+        mov byte ptr[bx], 3            ; set direction of travel to west
+        jmp exit                       ; jump to exit
+;---------------------------------------
+; Restore registers and return
+;---------------------------------------
+exit:
+        pop cx                         ; restore cx register
+        pop ax                         ; restore ax register
+        pop bp                         ; restore bp register
+        ret                            ; return
+;---------------------------------------
+; End the subroutine and return to main program
+;---------------------------------------
+        end                            ; finish the program
+;---------------------------------------

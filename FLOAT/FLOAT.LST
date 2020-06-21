@@ -1,0 +1,295 @@
+Microsoft (R) Macro Assembler Version 6.11		    11/18/18 22:33:41
+float.asm						     Page 1 - 1
+
+
+				;---------------------------------------------------------------------
+				; This program calculates pi.
+				;
+				; It uses the the Salamin-Brent algorithm.
+				; It uses only the primitive floating point operations.
+				; - It does its own calculation of square roots.
+				; - It converts the floating point value to characters for printing.
+				;
+				; Algorithm
+				;
+				;    Salamin-Brent algorithm
+				;
+				;    a   = 1.0;                          // a0 = 1
+				;    b   = 1.0 / sqrt (2.0);             // b0  = 1 / sqrt(2)
+				;    s   = 1.0;                          // s is the sum in the denominator
+				;    t   = 1.0;                          // the first value of 2**k when k = 0
+				;    old = 0.0;                          // last value of pi calculated
+				;
+				;    while (1)                           // loop forever
+				;       {
+				;       s = s - t * (a - b) * (a - b);   // subtract next value of sum from s
+				;       pi = 4 * a * a / s;              // calc new value of pi
+				;       c = (a + b) / 2.0;               // calc an+1 = (an + bn)/2
+				;       d = sqrt (a * b);                // calc bn+1 = sqrt(an * bn)
+				;       a = c;                           // set an+1
+				;       b = d;                           // set bn+1
+				;       t = 2 * t;                       // calc next value of 2**k
+				;       output(pi);                      // print the current value of pi
+				;       if (pi == old) break;            // exit the loop if pi is not changing
+				;       old = pi;                        // save the current value of pi
+				;       }
+				;
+				;
+				; Owner: John Choi
+				;
+				; Updated     Reason
+				; ----------------------------
+				; 11/18/2018  Original version
+				;
+				;---------------------------------------------------------------------
+
+
+				;---------------------------------------
+				         .model    small               ;4 segments of 64KB
+				         .8086                         ;only  8086 instructions
+				         .stack    256                 ;stack size is 256 bytes
+				         extern    output:proc         ;output subroutine is in another file
+				         extern    sqroot:proc         ;sqroot subroutine is in another file
+				;---------------------------------------
+
+				;---------------------------------------
+				; Data for the main program
+				;
+				; Note ... MASM does not allow a variable named c
+				;          so we use the name cc.
+				;
+				;---------------------------------------
+ 0000				         .data                         ;
+ 0000 3F800000			a        real4     1.0                 ;a0 = 1
+ 0004 3F3504F3			b        real4     0.707106781         ;b0 = 1 / sqrt(2)
+ 0008 00000000			cc       real4     0.0                 ;work value  (cc is the variable c)
+ 000C 00000000			d        real4     0.0                 ;work value
+ 0010 3F800000			s        real4     1.0                 ;s is the sum in the denominator
+ 0014 3F800000			t        real4     1.0                 ;the first value of 2**k when k = 0
+ 0018 00000000			old      real4     0.0                 ;last value of pi calculated
+ 001C 40000000			two      real4     2.0                 ;constant 2.0
+ 0020 40800000			four     real4     4.0                 ;constant 4.0
+ 0024 00000000			pi       real4     0.0                 ;current value of pi
+ 0028 0000			lstat    dw        0                   ;NDP control word
+ 002A 0000			status   dw        0                   ;NDP status register
+ 002C 00000000			temp     real4     0.0                 ;a temporary work variable
+				;---------------------------------------
+				; The code should converge to a correct
+				; answer in 5 loops. In case there is a
+				; bug in the program we limit the number
+				; of loops to 20.
+				;---------------------------------------
+ 0030 0014			maxloop  dw        20                  ;
+				;---------------------------------------
+
+
+				;---------------------------------------
+ 0000				         .code                         ;
+ 0000				start:                                 ;
+				;---------------------------------------
+				; Intialize the DS register.
+				; Initialize the NDP floating-point CPU.
+				;---------------------------------------
+ 0000  B8 ---- R		         mov       ax,@data            ;establish addressability
+ 0003  8E D8			         mov       ds,ax               ;to the data segment
+				                                       ;
+ 0005  9B DB E3			         finit                         ;initialize the NDP
+ 0008  D9 3E 0028 R		         fnstcw    [lstat]             ;get the NDP's control word
+ 000C  81 26 0028 R FCFF	         and       [lstat], 0FCFFh     ;set single precision
+ 0012  9B D9 2E 0028 R		         fldcw     [lstat]             ;store the updated NDP control word
+				;---------------------------------------
+
+
+				;--------------------------------------------------
+				; Calculate each line of the algorithm
+				;--------------------------------------------------
+
+
+				;---------------------------------------
+				; s = s - t * (a - b) * (a - b);   // subtract next value of sum from s
+				;---------------------------------------
+ 0017				piloop:                                ;
+ 0017  9B D9 06 0000 R		         fld [a]                       ; load a value
+ 001C  9B D9 06 0004 R		         fld [b]                       ; load b value
+ 0021  9B DE E9			         fsub                          ; do a - b and push it to the stack
+ 0024  9B D9 1E 002C R		         fstp [temp]                   ; save the result to the temp
+ 0029  9B D9 06 002C R		         fld [temp]                    ; load temp
+ 002E  9B D9 06 002C R		         fld [temp]                    ; two times
+ 0033  9B DE C9			         fmul                          ; do (a-b)(a-b)
+ 0036  9B D9 1E 002C R		         fstp [temp]                   ; update temp value to this
+ 003B  9B D9 06 002C R		         fld [temp]                    ; load temp to multiply with t
+ 0040  9B D9 06 0014 R		         fld [t]                       ; load t value to multiply
+ 0045  9B DE C9			         fmul                          ; multiply t with other stuff
+ 0048  9B D9 1E 002C R		         fstp [temp]                   ; update temp with new value
+ 004D  9B D9 06 0010 R		         fld [s]                       ; load s value
+ 0052  9B D9 06 002C R		         fld [temp]                    ; load temp value
+ 0057  9B DE E9			         fsub                          ; subtract s - everything else
+ 005A  9B D9 1E 0010 R		         fstp [s]                      ; save the result to s
+				         ;***********************************
+				         ; You code this statement
+				         ; s = s - t * (a - b) * (a - b);
+				         ;***********************************
+
+
+				;---------------------------------------
+				;    pi = 4 * a * a / s;     // calc new value of pi
+				;---------------------------------------
+ 005F  9B D9 06 0020 R		         fld [four]                    ; load four
+ 0064  9B D9 06 0000 R		         fld [a]                       ; load a value
+ 0069  9B DE C9			         fmul                          ; multiply 4 and a
+ 006C  9B D9 1E 002C R		         fstp [temp]                   ; save it to temp
+ 0071  9B D9 06 0000 R		         fld [a]                       ; load a again
+ 0076  9B D9 06 002C R		         fld [temp]                    ; load temp
+ 007B  9B DE C9			         fmul                          ; do (4 * a) * a
+ 007E  9B D9 1E 002C R		         fstp [temp]                   ; save it to temp
+ 0083  9B D9 06 002C R		         fld [temp]                    ; load temp
+ 0088  9B D9 06 0010 R		         fld [s]                       ; load s
+ 008D  9B DE F9			         fdiv                          ; divide 4aa by s
+ 0090  9B D9 1E 0024 R		         fstp [pi]                     ; save the result to pi
+
+				         ;***********************************
+				         ; You code this statement
+				         ; pi = 4 * a * a / s;
+				         ;***********************************
+
+
+				;---------------------------------------
+				;    c = (a + b) / 2.0;      // calc an+1 = (an + bn)/2
+				;---------------------------------------
+ 0095  9B D9 06 0000 R		         fld [a]                       ; load a value
+ 009A  9B D9 06 0004 R		         fld [b]                       ; load b value
+ 009F  9B DE C1			         fadd                          ; add a + b
+ 00A2  9B D9 1E 002C R		         fstp [temp]                   ; save it to temp
+ 00A7  9B D9 06 002C R		         fld [temp]                    ; load temp
+ 00AC  9B D9 06 001C R		         fld [two]                     ; load two
+ 00B1  9B DE F9			         fdiv                          ; divide temp by 2
+ 00B4  9B D9 1E 0008 R		         fstp [cc]                     ; save the result to cc
+
+				         ;***********************************
+				         ; You code this statement
+				         ; c = (a + b) / 2.0;
+				         ;
+				         ; Note that MASM does not allow the
+				         ; variable name c so we use the
+				         ; variable named cc
+				         ;
+				         ; cc = (a + b) / 2.0;
+				         ;
+				         ;***********************************
+
+
+				;---------------------------------------
+				;    d = sqrt (a * b);       // calc bn+1 = sqrt(an * bn)
+				;---------------------------------------
+ 00B9  9B D9 06 0000 R		         fld       [a]                 ;push a
+ 00BE  9B D9 06 0004 R		         fld       [b]                 ;push b
+ 00C3  9B DE C9			         fmul                          ;calc a*b
+ 00C6  E8 0000 E		         call      sqroot              ;calc sqrt(a*b)
+ 00C9  9B D9 1E 000C R		         fstp      [d]                 ;pop  d
+				;---------------------------------------
+				;    a = c;        // set an+1
+				;---------------------------------------
+ 00CE  9B D9 06 0008 R		         fld       [cc]                ;push c
+ 00D3  9B D9 1E 0000 R		         fstp      [a]                 ;pop  a
+				;---------------------------------------
+				;    b = d;        // set bn+1
+				;---------------------------------------
+ 00D8  9B D9 06 000C R		         fld       [d]                 ;push d
+ 00DD  9B D9 1E 0004 R		         fstp      [b]                 ;pop  b
+				;---------------------------------------
+				;    t = 2 * t;    // calc next value of 2**k
+				;---------------------------------------
+ 00E2  9B D9 06 0014 R		         fld       [t]                 ;push t
+ 00E7  9B D9 06 0014 R		         fld       [t]                 ;push t
+ 00EC  9B DE C1			         fadd                          ;calc 2*t
+ 00EF  9B D9 1E 0014 R		         fstp      [t]                 ;pop t
+				;---------------------------------------
+				;    output(pi);   // print the current value of pi
+				;---------------------------------------
+ 00F4  9B D9 06 0024 R		         fld       [pi]                ;push pi
+ 00F9  E8 0000 E		         call      output              ;output pi
+ 00FC  9B D9 1E 0024 R		         fstp      [pi]                ;pop  pi
+				;---------------------------------------
+				;    if (pi == old) break;    // exit the loop if pi is not changing
+				;---------------------------------------
+ 0101  9B D9 06 0024 R		         fld       [pi]                ;push pi
+ 0106  9B D9 06 0018 R		         fld       [old]               ;push old
+ 010B  9B DE D9			         fcompp                        ;calculate pi - old
+ 010E  9B DD 3E 002A R		         fstsw     [status]            ;store the floating point status
+ 0113  9B			         fwait                         ;wait until store is complete
+ 0114  A1 002A R		         mov       ax,[status]         ;ax = floating point status
+ 0117  9E			         sahf                          ;store ah into main cpu status
+ 0118  74 13			         je        piend               ;exit if pi == old
+				;---------------------------------------
+				;    if we loop 20 times we also terminate
+				;---------------------------------------
+ 011A  FF 0E 0030 R		         dec       [maxloop]
+ 011E  74 0D			         je        piend
+				;---------------------------------------
+				;    old = pi;     // save the current value of pi
+				;---------------------------------------
+ 0120  9B D9 06 0024 R		         fld       [pi]                ;push pi
+ 0125  9B D9 1E 0018 R		         fstp      [old]               ;pop  old
+ 012A  E9 FEEA			         jmp       piloop              ;loop
+				;---------------------------------------
+				; Terminate the program
+				;---------------------------------------
+ 012D				piend:                                 ;
+ 012D  B8 4C00			         mov       ax,4c00h            ;set DOS termination code
+ 0130  CD 21			         int       21h                 ;terminate
+				;---------------------------------------
+
+				         end       start
+
+				 
+Microsoft (R) Macro Assembler Version 6.11		    11/18/18 22:33:41
+float.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+DGROUP . . . . . . . . . . . . .	GROUP
+_DATA  . . . . . . . . . . . . .	16 Bit	 0032	  Word	  Public  'DATA'	
+STACK  . . . . . . . . . . . . .	16 Bit	 0100	  Para	  Stack	  'STACK'	 
+_TEXT  . . . . . . . . . . . . .	16 Bit	 0132	  Word	  Public  'CODE'	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 0000h	 
+@DataSize  . . . . . . . . . . .	Number	 0000h	 
+@Interface . . . . . . . . . . .	Number	 0000h	 
+@Model . . . . . . . . . . . . .	Number	 0002h	 
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 DGROUP
+@fardata?  . . . . . . . . . . .	Text   	 FAR_BSS
+@fardata . . . . . . . . . . . .	Text   	 FAR_DATA
+@stack . . . . . . . . . . . . .	Text   	 DGROUP
+a  . . . . . . . . . . . . . . .	DWord	 0000	  _DATA	
+b  . . . . . . . . . . . . . . .	DWord	 0004	  _DATA	
+cc . . . . . . . . . . . . . . .	DWord	 0008	  _DATA	
+d  . . . . . . . . . . . . . . .	DWord	 000C	  _DATA	
+four . . . . . . . . . . . . . .	DWord	 0020	  _DATA	
+lstat  . . . . . . . . . . . . .	Word	 0028	  _DATA	
+maxloop  . . . . . . . . . . . .	Word	 0030	  _DATA	
+old  . . . . . . . . . . . . . .	DWord	 0018	  _DATA	
+output . . . . . . . . . . . . .	L Near	 0000	  External
+piend  . . . . . . . . . . . . .	L Near	 012D	  _TEXT	
+piloop . . . . . . . . . . . . .	L Near	 0017	  _TEXT	
+pi . . . . . . . . . . . . . . .	DWord	 0024	  _DATA	
+sqroot . . . . . . . . . . . . .	L Near	 0000	  External
+start  . . . . . . . . . . . . .	L Near	 0000	  _TEXT	
+status . . . . . . . . . . . . .	Word	 002A	  _DATA	
+s  . . . . . . . . . . . . . . .	DWord	 0010	  _DATA	
+temp . . . . . . . . . . . . . .	DWord	 002C	  _DATA	
+two  . . . . . . . . . . . . . .	DWord	 001C	  _DATA	
+t  . . . . . . . . . . . . . . .	DWord	 0014	  _DATA	
+
+	   0 Warnings
+	   0 Errors

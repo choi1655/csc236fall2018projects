@@ -1,0 +1,183 @@
+Microsoft (R) Macro Assembler Version 6.11		    11/05/18 11:35:40
+rlc.asm							     Page 1 - 1
+
+
+				;---------------------------------------------------------------------
+				;  Program:      Run Length Coding
+				;
+				;  Function:     Decompresses 1 dimensional run lengths
+				;                This subroutine links with a C main program
+				;
+				;                Add your additional functional comments
+				;
+				;  Owner:       John Choi, Eric McAllister
+				;
+				;  Changes:
+				;  Date          Reason
+				;  ----          ------
+				;  11/05/2018    Original version ... coded to spec design
+				;---------------------------------------------------------------------
+				         .model    small
+				         .8086
+				         public    _rlc
+				;---------------------------------------
+ 0000				         .data                         ; start the data segment
+				;---------------------------------------
+ 0000 50			pels_left       db      80             ; data segment
+ 0001 02			boolean         db      2
+ 0002 0000			hold            dw      ?
+				;---------------------------------------
+ 0000				         .code                         ; start the code segnment
+				;---------------------------------------
+				; Save the registers ... 'C' requires (bp,si,di)
+				; Access the input and output lists
+				;---------------------------------------
+ 0000				_rlc:                                   ;
+ 0000  55			        push      bp                    ; save 'C' register
+ 0001  8B EC			        mov       bp,sp                 ; set bp to point to stack
+ 0003  56			        push      si                    ; save 'C' register
+ 0004  57			        push      di                    ; save 'C' register
+ 0005  8B 76 04			        mov       si,[bp+4]             ; si points to the input compressed data
+ 0008  8B 7E 06			        mov       di,[bp+6]             ; di points to the empty output buffer
+ 000B  BA 20DB			        mov       dx, 20DBh             ; values for printing colors
+				;---------------------------------------
+				; Actual starting point of the subroutine.
+				; Gets left digit and right digits out of byte.
+				;---------------------------------------
+ 000E  8C D8			        mov     ax, ds
+ 0010  8E C0			        mov     es, ax
+ 0012  FC			        cld                             ; execute so indices increase
+
+ 0013				start:                                  ;
+ 0013  BB 0002			        mov     bx, 2                   ; boolean value to make sure we run loop 2 times
+ 0016  B1 04			        mov     cl, 4                   ; bit shift value 4 bits to get High/Low digit
+				        ;cld                             ; execute so indices increase
+
+ 0018  AC			        lodsb                           ; move si into al and inc si
+ 0019  3C 00			        cmp     al, 00h                 ; if value is 0,
+ 001B  74 46			        je      _exit                   ; exit subroutine
+ 001D  8A E0			        mov     ah, al                  ; copy data into another reg
+ 001F  D2 E8			        shr     al, cl                  ; shift bits to get high bit
+ 0021  80 E4 0F			        and     ah, 0Fh                 ; mask to get low bits
+				;---------------------------------------
+				; Check pels_left is 0.
+				; If it is, reset it to 80.
+				; Set color to white.
+				;---------------------------------------
+ 0024				_loop:                                  ;
+ 0024  83 FB 00			        cmp     bx, 0                   ; if boolean value is 0
+ 0027  74 EA			        je      start                   ; we stop running loop
+ 0029  80 3E 0000 R 00		        cmp     [pels_left], 0          ; if not, see if pels_left is 0
+ 002E  75 08			        jne     over                    ; if not, jump to over
+ 0030  C6 06 0000 R 50		        mov     [pels_left], 80         ; if 0, reset pels_left to 80
+ 0035  BA 20DB			        mov     dx, 20DBh               ; and reset current color
+				;---------------------------------------
+				; Check if ah is 15.
+				; Print the rest of the pels as white for F input.
+				;---------------------------------------
+ 0038				over:                                   ;
+ 0038  3C 0F			        cmp     al, 15                  ; see if current digit is Fh
+ 003A  75 09			        jne     skip                    ; if not, skip to label "skip"
+ 003C  BA 20DB			        mov     dx, 20DBh               ; if F, reset current color
+ 003F  8B 0E 0000 R		        mov     cx, word ptr[pels_left] ; set cx to pels_left for looping
+ 0043  EB 07			        jmp     cmpcx                   ; and jump to cmpcx
+				;---------------------------------------
+				; Label that gets called if current digit
+				; is not F.
+				;---------------------------------------
+ 0045				skip:                                   ;
+ 0045  A2 0002 R		        mov     byte ptr[hold], al      ; set current digit to variable "hold"
+ 0048  8B 0E 0002 R		        mov     cx, [hold]              ; set cx to the value of hold - have to do this because of size
+				;---------------------------------------
+				; Gets called to skip the "skip" block of
+				; the code.
+				;---------------------------------------
+ 004C				cmpcx:                                  ;
+ 004C  80 F9 00			        cmp     cl, 0                   ; if the value of cl is 0
+ 004F  74 0B			        je      cxzero                  ; jump to cxzero
+				;---------------------------------------
+				; Block of the code that gets called to clear
+				; the high bit of cx register.
+				;---------------------------------------
+ 0051				clear:                                  ;
+ 0051  B5 00			        mov     ch, 0                   ; clear the high bit of cx register
+				;---------------------------------------
+				; Block of code that handles the while loop.
+				; Writes to the output stream until pels_left is 0.
+				;---------------------------------------
+ 0053				x:                                      ;
+ 0053  88 35			        mov     [di], dh                ; while loop
+ 0055  47			        inc     di                      ; that writes to output stream, di and increases di
+ 0056  FE 0E 0000 R		        dec     pels_left               ; and decrement pels_left
+ 005A  E2 F7			        loop    x                       ; and loop until cx is 0
+
+				        ; mov       al, dh
+				        ; sub       [pels_left], al
+				        ; rep       stosb
+				;---------------------------------------
+				; Block of code that handles swapping of ax
+				; register and dx register.
+				; Ax register holds the upper digit and lower digit
+				; in a byte and dx register holds the current color
+				;---------------------------------------
+ 005C				cxzero:                                 ;
+ 005C  86 C4			        xchg    al, ah                  ; swap values to read different digit in byte
+ 005E  86 D6			        xchg    dl, dh                  ; swap colors
+				;loop with new values one more time
+ 0060  4B			        dec     bx                      ; decrement boolean value to ensure loop runs 2 times
+ 0061  EB C1			        jmp     _loop                   ; re run loop
+				;---------------------------------------
+				; Restore registers and return
+				;---------------------------------------
+ 0063				_exit:                                  ;
+ 0063  5F			        pop       di                    ; restore 'C' register
+ 0064  5E			        pop       si                    ; restore 'C' register
+ 0065  5D			        pop       bp                    ; restore 'C' register
+ 0066  C3			        ret                             ; return
+				;---------------------------------------
+				        end                             ; end program
+				 
+Microsoft (R) Macro Assembler Version 6.11		    11/05/18 11:35:40
+rlc.asm							     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+DGROUP . . . . . . . . . . . . .	GROUP
+_DATA  . . . . . . . . . . . . .	16 Bit	 0004	  Word	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	16 Bit	 0067	  Word	  Public  'CODE'	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 0000h	 
+@DataSize  . . . . . . . . . . .	Number	 0000h	 
+@Interface . . . . . . . . . . .	Number	 0000h	 
+@Model . . . . . . . . . . . . .	Number	 0002h	 
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 DGROUP
+@fardata?  . . . . . . . . . . .	Text   	 FAR_BSS
+@fardata . . . . . . . . . . . .	Text   	 FAR_DATA
+@stack . . . . . . . . . . . . .	Text   	 DGROUP
+_exit  . . . . . . . . . . . . .	L Near	 0063	  _TEXT	
+_loop  . . . . . . . . . . . . .	L Near	 0024	  _TEXT	
+_rlc . . . . . . . . . . . . . .	L Near	 0000	  _TEXT	Public
+boolean  . . . . . . . . . . . .	Byte	 0001	  _DATA	
+clear  . . . . . . . . . . . . .	L Near	 0051	  _TEXT	
+cmpcx  . . . . . . . . . . . . .	L Near	 004C	  _TEXT	
+cxzero . . . . . . . . . . . . .	L Near	 005C	  _TEXT	
+hold . . . . . . . . . . . . . .	Word	 0002	  _DATA	
+over . . . . . . . . . . . . . .	L Near	 0038	  _TEXT	
+pels_left  . . . . . . . . . . .	Byte	 0000	  _DATA	
+skip . . . . . . . . . . . . . .	L Near	 0045	  _TEXT	
+start  . . . . . . . . . . . . .	L Near	 0013	  _TEXT	
+x  . . . . . . . . . . . . . . .	L Near	 0053	  _TEXT	
+
+	   0 Warnings
+	   0 Errors

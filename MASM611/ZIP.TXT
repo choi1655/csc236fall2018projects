@@ -1,0 +1,2 @@
+pkzip    masm611 -rp
+zip2exe  masm611

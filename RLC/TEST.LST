@@ -1,0 +1,95 @@
+Microsoft (R) Macro Assembler Version 6.11		    11/03/18 27:52:26
+test.asm						     Page 1 - 1
+
+
+				;   lodsb and rep stosb
+				.model    small
+				.8086
+				public    _rlc
+test.asm(4): error A2006: undefined symbol : _rlc
+ 0000				  .data
+ 0000 50			pels_left       db  80
+ 0001 20			cur             db  32
+ 0000				  .code
+ 0000  FC			        cld
+ 0001				start:
+ 0001  AC			        lodsb               ;al register has a value & si is incremented
+ 0002  3C 00			        cmp     al, 00h
+				        je      _end
+test.asm(13): error A2006: undefined symbol : _end
+ 0004  8A E0			        mov     ah, al      ; need to duplicate the values
+ 0006  D0 E8			        shr     al, 1       ; high bit is shifted to get out
+ 0008  80 E4 0F			        and     ah, 0Fh     ; low bit is masked to get out
+ 000B  80 3E 0000 R 00		        cmp     [pels_left], 0
+ 0010  74 37			        je      _reset
+ 001A				_continue:
+ 001A  3C 0F			        cmp     al, 0Fh
+ 001C  74 37			        je      printF
+				        mov     byte ptr cx, al
+test.asm(22): error A2032: invalid use of register
+ 001E  28 06 0000 R		        sub     [pels_left], al
+				        rep
+test.asm(24): error A2008: syntax error : rep
+				        stosb 32h
+test.asm(25): error A2070: invalid instruction operands
+ 0022  74 F6			        je      _continue
+ 0024  80 3E 0001 R 32		        cmp     [cur], 32h
+ 0029  74 10			        je      _swap
+ 002B  75 15			        jne     _swap2
+				
+ 003B				_swap:
+ 003B  C6 06 0001 R DB		        mov     [cur], 219
+ 0040  EB BF			        jmp     start
+ 0042				_swap2:
+ 0042  C6 06 0001 R 20		        mov     [cur], 32
+ 0047  EB B8			        jmp     start
+ 0049				_reset:
+ 0049  C6 06 0000 R 50		        mov     [pels_left], 80
+ 004E  C6 06 0001 R 20		        mov     [cur], 32
+ 0053  EB C5			        jmp     _continue
+ 0055				printF:
+				        mov     cx, [pels_left]
+test.asm(42): error A2070: invalid instruction operands
+				        stosb 32h
+test.asm(43): error A2070: invalid instruction operands
+ 0055  74 AA			        je start
+test.asm(44): error A2088: END directive required at end of file
+Microsoft (R) Macro Assembler Version 6.11		    11/03/18 27:52:26
+test.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+DGROUP . . . . . . . . . . . . .	GROUP
+_DATA  . . . . . . . . . . . . .	16 Bit	 0002	  Word	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	16 Bit	 005A	  Word	  Public  'CODE'	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 0000h	 
+@DataSize  . . . . . . . . . . .	Number	 0000h	 
+@Interface . . . . . . . . . . .	Number	 0000h	 
+@Model . . . . . . . . . . . . .	Number	 0002h	 
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 DGROUP
+@fardata?  . . . . . . . . . . .	Text   	 FAR_BSS
+@fardata . . . . . . . . . . . .	Text   	 FAR_DATA
+@stack . . . . . . . . . . . . .	Text   	 DGROUP
+_continue  . . . . . . . . . . .	L Near	 001A	  _TEXT	
+_reset . . . . . . . . . . . . .	L Near	 0049	  _TEXT	
+_swap2 . . . . . . . . . . . . .	L Near	 0042	  _TEXT	
+_swap  . . . . . . . . . . . . .	L Near	 003B	  _TEXT	
+cur  . . . . . . . . . . . . . .	Byte	 0001	  _DATA	
+pels_left  . . . . . . . . . . .	Byte	 0000	  _DATA	
+printF . . . . . . . . . . . . .	L Near	 0055	  _TEXT	
+start  . . . . . . . . . . . . .	L Near	 0001	  _TEXT	
+
+	   0 Warnings
+	   8 Errors

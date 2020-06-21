@@ -1,0 +1,160 @@
+Microsoft (R) Macro Assembler Version 6.11		    10/22/18 07:24:26
+nextval.asm						     Page 1 - 1
+
+
+				;--------------------------------------------------------------------
+				;
+				;   NEXTVAL SUBROUTINE    ***** MASM VERSION *****
+				;
+				;
+				;   NEXTVAL.  Find next mouse move in an array 15 by 30.
+				;            We can move into a position if its contents is blank ( 20h ).
+				;
+				;   Input:     Calling sequence is:
+				;                  x    pointer   si
+				;                  y    pointer   di
+				;                  dir  pointer   bx
+				;                  maze pointer   bp
+				;
+				;   Output:    x,y,dir modified in caller's data segment
+				;
+				;   To use, type this command:  NEXTVAL
+				;
+				;   Author:    John Choi, Eric McAllister
+				;
+				;   Date       Reason
+				;   ----       ------
+				; 10/22/2018   Original version
+				;
+				;---------------------------------------
+				         .model    small               ; 64k code and 64k data
+				         .8086                         ; only allow 8086 instructions
+				         public    nextval             ; allow extrnal programs to call
+				;---------------------------------------
+ 0000				         .data
+				;---------------------------------------
+ 0000 1E			thirty   db 30                         ; variable constant thirty
+				;---------------------------------------
+ 0000				         .code                         ; start the code segment
+				;---------------------------------------
+				; Save any modified registers
+				; Calculates offset and saves it in ax
+				;---------------------------------------
+ 0000				nextval:
+ 0000  55			        push bp                        ; save bp register
+ 0001  50			        push ax                        ; save ax register
+ 0002  51			        push cx                        ; save cx register
+ 0003  B8 0000			        mov ax, 0                      ; This is
+ 0006  8A 0C			        mov cl, [si]                   ; part of
+ 0008  8A 2D			        mov ch, [di]                   ; offset
+ 000A  8A C5			        mov al, ch                     ; calculation
+ 000C  2C 01			        sub al, 1                      ; code
+				;---------------------------------------
+				; Finalizes the step to calculating
+				; result for offset
+				;---------------------------------------
+ 000E  F6 26 0000 R		        mul [thirty]                   ; multiply y-1 to 30
+ 0012  B5 00			        mov ch, 0                      ; get cx ready for addition
+ 0014  2C 01			        sub al, 1                      ; handle the memory access issue
+ 0016  03 C1			        add ax, cx                     ; add ch to offset
+ 0018  03 E8			        add bp, ax                     ; add bp by the offset
+				;---------------------------------------
+				; This part determines behaviors for
+				; current direction
+				;---------------------------------------
+ 001A  80 3F 01			        cmp byte ptr[bx], 1            ; If direction is 1
+ 001D  74 0F			        je testn                       ; jump to testn
+ 001F  80 3F 02			        cmp byte ptr[bx], 2            ; If direction is 2
+ 0022  74 19			        je teste                       ; jump to teste
+ 0024  80 3F 03			        cmp byte ptr[bx], 3            ; If direction is 3
+ 0027  74 23			        je tests                       ; jump to tests
+ 0029  80 3F 04			        cmp byte ptr[bx], 4            ; If direction is 4
+ 002C  74 2D			        je testw                       ; jump to testw
+				;---------------------------------------
+				; Code to make 1 move in the maze
+				; Handles north movement
+				;---------------------------------------
+ 002E				testn:
+ 002E  3E: 80 7E E2 20		        cmp byte ptr ds:[bp - 30], 20h ; if location is empty
+ 0033  75 08			        jne teste                      ; if not empty space, goto teste
+ 0035  80 2D 01			        sub byte ptr[di], 1            ; decrement y
+ 0038  C6 07 04			        mov byte ptr[bx], 4            ; set direction of travel to north
+ 003B  EB 2D			        jmp exit                       ; jump to exit
+				;---------------------------------------
+				; Handles east movement
+				;---------------------------------------
+ 003D				teste:
+ 003D  3E: 80 7E 01 20		        cmp byte ptr ds:[bp + 1], 20h  ; if not empty space
+ 0042  75 08			        jne tests                      ; goto tests
+ 0044  80 04 01			        add byte ptr[si], 1            ; increment x
+ 0047  C6 07 01			        mov byte ptr[bx], 1            ; set direction of travel to east
+ 004A  EB 1E			        jmp exit                       ; jump to exit
+				;---------------------------------------
+				; Handles south movement
+				;---------------------------------------
+ 004C				tests:
+ 004C  3E: 80 7E 1E 20		        cmp byte ptr ds:[bp + 30], 20h ; if not empty space
+ 0051  75 08			        jne testw                      ; goto testw
+ 0053  80 05 01			        add byte ptr[di], 1            ; increment y
+ 0056  C6 07 02			        mov byte ptr[bx], 2            ; set direction of travel to south
+ 0059  EB 0F			        jmp exit                       ; jump to exit
+				;---------------------------------------
+				; Handles west movement
+				;---------------------------------------
+ 005B				testw:
+ 005B  3E: 80 7E FF 20		        cmp byte ptr ds:[bp - 1], 20h  ; if not empty space
+ 0060  75 CC			        jne testn                      ; goto testn
+ 0062  80 2C 01			        sub byte ptr[si], 1            ; decrement x value
+ 0065  C6 07 03			        mov byte ptr[bx], 3            ; set direction of travel to west
+ 0068  EB 00			        jmp exit                       ; jump to exit
+				;---------------------------------------
+				; Restore registers and return
+				;---------------------------------------
+ 006A				exit:
+ 006A  59			        pop cx                         ; restore cx register
+ 006B  58			        pop ax                         ; restore ax register
+ 006C  5D			        pop bp                         ; restore bp register
+ 006D  C3			        ret                            ; return
+				;---------------------------------------
+				; End the subroutine and return to main program
+				;---------------------------------------
+				        end                            ; finish the program
+				;---------------------------------------
+Microsoft (R) Macro Assembler Version 6.11		    10/22/18 07:24:26
+nextval.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+DGROUP . . . . . . . . . . . . .	GROUP
+_DATA  . . . . . . . . . . . . .	16 Bit	 0001	  Word	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	16 Bit	 006E	  Word	  Public  'CODE'	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 0000h	 
+@DataSize  . . . . . . . . . . .	Number	 0000h	 
+@Interface . . . . . . . . . . .	Number	 0000h	 
+@Model . . . . . . . . . . . . .	Number	 0002h	 
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 DGROUP
+@fardata?  . . . . . . . . . . .	Text   	 FAR_BSS
+@fardata . . . . . . . . . . . .	Text   	 FAR_DATA
+@stack . . . . . . . . . . . . .	Text   	 DGROUP
+exit . . . . . . . . . . . . . .	L Near	 006A	  _TEXT	
+nextval  . . . . . . . . . . . .	L Near	 0000	  _TEXT	Public
+teste  . . . . . . . . . . . . .	L Near	 003D	  _TEXT	
+testn  . . . . . . . . . . . . .	L Near	 002E	  _TEXT	
+tests  . . . . . . . . . . . . .	L Near	 004C	  _TEXT	
+testw  . . . . . . . . . . . . .	L Near	 005B	  _TEXT	
+thirty . . . . . . . . . . . . .	Byte	 0000	  _DATA	
+
+	   0 Warnings
+	   0 Errors

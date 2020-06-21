@@ -1,0 +1,152 @@
+Microsoft (R) Macro Assembler Version 6.11		    10/27/18 20:50:22
+linkhll.asm						     Page 1 - 1
+
+
+				;--------------------------------------------------------------------
+				;   LINKHLL ***** MASM VERSION *****
+				;
+				;
+				;   LINKHLL.  The linkhll subroutine is a C/C++ subroutine
+				;   and will be linked with a C/C++ main program. The linkhll
+				;   subroutine will be passed four unsigned words on the stack
+				;   (these are passed by value). Linkhll is to find the two largest
+				;   unsigned values and multiply them creating a 32 bit unsigned
+				;   product.
+				;
+				;
+				;       Input:
+				;             v1, v2, v3, v4 16-bit unsigned values from driver program.
+				;       Output:
+				;             Product of max value and min value in 32-bit, dx:ax pair
+				;             register
+				;
+				;   Author:   John Choi
+				;
+				;   Date:     Changes
+				;   09/22/18  original version
+				;---------------------------------------
+				         .model     small              ; 64k code and 64k data
+				         .8086                         ; only allow 8086 instructions
+				         public     _linkhll           ; allow external programs to call
+				;---------------------------------------
+ 0000				         .code                         ; start the code segment
+				;---------------------------------------
+				; Starting point of this subroutine.
+				; Save bp register and initialize ax and bx values
+				; to param1 and param2
+				;---------------------------------------
+ 0000				_linkhll:
+ 0000  55			        push bp                        ; save caller's bp
+ 0001  8B EC			        mov  bp, sp                    ; init bp so we can get the arguments
+ 0003  8B 46 04			        mov  ax, [bp + 4]              ; assign param1 to max
+ 0006  8B 5E 06			        mov  bx, [bp + 6]              ; assign param2 to secondMax
+ 0009  3B C3			        cmp  ax, bx                    ; if ax is less than bx
+ 000B  77 06			        ja   firstCmp                  ; jump to else statement
+ 000D  8B 46 06			        mov  ax, [bp + 6]              ; swap if
+ 0010  8B 5E 04			        mov  bx, [bp + 4]              ; else
+				;---------------------------------------
+				; Portion of the code where first comparison
+				; happens.
+				; Compares if param3 is greater than ax, first maximum
+				;---------------------------------------
+ 0013				firstCmp:
+ 0013  39 46 08			        cmp  [bp + 8], ax              ; if param3 is greater than ax
+ 0016  72 07			        jb   secondCmp                 ; (if param3 is less than ax)
+ 0018  8B D8			        mov  bx, ax                    ; go here and assign bx to ax and
+ 001A  8B 46 08			        mov  ax, [bp + 8]              ; assign ax to param3
+ 001D  EB 0D			        jmp  fifthCmp                  ; compare param4 if param4 is greater than ax
+				;---------------------------------------
+				; Portion of the code where second comparison
+				; happens.
+				; This is the else if part of the if-else
+				; statement.
+				;---------------------------------------
+ 001F				secondCmp:                             ; (go here)
+ 001F  39 46 08			        cmp  [bp + 8], ax              ; else if param3 is less than ax and
+ 0022  77 08			        ja   fifthCmp                  ; (if param3 is greater than ax)
+ 0024  39 5E 08			        cmp  [bp + 8], bx              ; param3 is greater than bx
+ 0027  72 03			        jb   fifthCmp                  ; <if param3 is less than bx>
+ 0029  8B 5E 08			        mov  bx, [bp + 8]              ; assign param3 to bx
+				;---------------------------------------
+				; Portion of the code where if-else statement
+				; happens.
+				; This part handles the case where param3 is
+				; less than bx.
+				;---------------------------------------
+ 002C				fifthCmp:                              ; (<go here>)
+ 002C  39 46 0A			        cmp  [bp + 10], ax             ; if param4 is greater than ax
+ 002F  72 07			        jb   seventhCmp                ; (if param4 is less than ax)
+ 0031  8B D8			        mov  bx, ax                    ; go here and assign bx to ax and
+ 0033  8B 46 0A			        mov  ax, [bp + 10]             ; assign ax to param4
+ 0036  EB 0D			        jmp  calculate                 ; jump to calculate if param4 is greater than ax
+				;---------------------------------------
+				; Portion of the code where if-else statement
+				; happens.
+				; This part handles the case where
+				; param4 is greater than ax.
+				; Contains else statement.
+				;---------------------------------------
+ 0038				seventhCmp:                            ; (go here)
+ 0038  39 46 0A			        cmp  [bp + 10], ax             ; else if param4 is less than ax and
+ 003B  77 08			        ja   calculate                 ; (if param4 is greater than ax)
+ 003D  39 5E 0A			        cmp  [bp + 10], bx             ; param4 is greater than bx
+ 0040  72 03			        jb   calculate                 ; <if param4 is less than bx>
+ 0042  8B 5E 0A			        mov  bx, [bp + 10]             ; assign bx to param4
+				;---------------------------------------
+				; Portion of the code where the actual
+				; calculation happens.
+				; AX register is first max value, BX register
+				; holds the second max value.
+				; Stores the result in dx:ax register
+				;---------------------------------------
+ 0045				calculate:                             ; (<go here>)
+ 0045  F7 E3			        mul  bx                        ; multiply max and min and store in dx:ax
+				;---------------------------------------
+				; Restore registers and return.
+				;---------------------------------------
+ 0047				exit:
+ 0047  5D			        pop  bp                        ; restore bp
+ 0048  C3			        ret                            ; return
+				;---------------------------------------
+				; End the subroutine and return to main program
+				;---------------------------------------
+				        end                            ; finish the program
+				;---------------------------------------
+Microsoft (R) Macro Assembler Version 6.11		    10/27/18 20:50:22
+linkhll.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+DGROUP . . . . . . . . . . . . .	GROUP
+_DATA  . . . . . . . . . . . . .	16 Bit	 0000	  Word	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	16 Bit	 0049	  Word	  Public  'CODE'	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 0000h	 
+@DataSize  . . . . . . . . . . .	Number	 0000h	 
+@Interface . . . . . . . . . . .	Number	 0000h	 
+@Model . . . . . . . . . . . . .	Number	 0002h	 
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 DGROUP
+@fardata?  . . . . . . . . . . .	Text   	 FAR_BSS
+@fardata . . . . . . . . . . . .	Text   	 FAR_DATA
+@stack . . . . . . . . . . . . .	Text   	 DGROUP
+_linkhll . . . . . . . . . . . .	L Near	 0000	  _TEXT	Public
+calculate  . . . . . . . . . . .	L Near	 0045	  _TEXT	
+exit . . . . . . . . . . . . . .	L Near	 0047	  _TEXT	
+fifthCmp . . . . . . . . . . . .	L Near	 002C	  _TEXT	
+firstCmp . . . . . . . . . . . .	L Near	 0013	  _TEXT	
+secondCmp  . . . . . . . . . . .	L Near	 001F	  _TEXT	
+seventhCmp . . . . . . . . . . .	L Near	 0038	  _TEXT	
+
+	   0 Warnings
+	   0 Errors

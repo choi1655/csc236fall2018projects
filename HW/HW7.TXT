@@ -1,0 +1,101 @@
+HW7 - Subroutines 
+
+01.  Given this subroutine whose input is a pointer in si.              
+                                                                   
+    subr:    mov  bx,2                                             
+             mov  cx,1                                             
+             mov  ax,[si]                                          
+             mul  bx                                               
+             jc   subret                                           
+             div  cx                                               
+    subret:  ret                                                   
+                                                                   
+Which registers are modified by the subroutine.                    
+A. The only registers modified are: bx and cx                      
+B. The only registers modified are: ax and bx and cx               
+C. The only registers modified are: ax and bx and cx and si        
+D. The only registers modified are: ax and bx and cx and dx        
+E. The only registers modified are: ax and bx and cx and dx and si 
+
+
+02.  Given this subroutine whose input is a pointer in si.              
+                                                                   
+    subr:    mov  bx,2                                             
+             mov  cx,1                                             
+             mov  ax,[si]                                          
+             mul  bx                                               
+             jc   subret                                           
+             div  cx                                               
+    subret:  ret                                                   
+                                                                   
+Which hex value, if loaded into ax by the instruction mov ax,[si]  
+would result in the subroutine generating a divide overflow.       
+A. 0000                                                            
+B. 7FFF                                                            
+C. 8000                                                            
+D. All  of the above will result in a divide overflow.             
+E. None of the above will result in a divide overflow.             
+
+
+03.  You have been asked to review the following subroutine.  The       
+calling program expects that all modified registers will be saved  
+and restored.  Which registers are modified and should be saved    
+and restored?                                                      
+                                                                   
+       sub:   mov  ax,[si]                                         
+              add  [di],ax                                         
+              mul  ax                                              
+              mov  [bx],dx                                         
+              ret                                                  
+                                                                   
+A. The only register  modified is:  ax                             
+B. The only registers modified are: ax and si                      
+C. The only registers modified are: ax and dx                      
+D. The only registers modified are: ax and si and bx               
+E. The only registers modified are: ax and di and bx               
+F. The only registers modified are: ax and si and di and bx        
+
+
+04.  Given this subroutine.                                              
+                                                                    
+      subr:   push  ax                                              
+              push  si                                              
+              mov   ax,[si]                                         
+              mov   [si],ah                                         
+              mov   [si+1],al                                       
+              pop   ax                                              
+              pop   si                                              
+              ret                                                   
+                                                                    
+A. The ax and si registers are correctly saved and restored.       
+B. The ax and si registers are not correctly saved and restored.   
+
+
+05.  The input to this routine is a pointer in si that points to a word of   
+data in memory.  The routine is to swap the high byte and low byte of   
+the data word in memory.  For example if si points the memory data word 
+11 22, then the routine should set the memory data word to 22 11.   
+                                                                    
+      subr:   push  ax                                              
+              push  si                                              
+              mov   ax,[si]                                         
+              mov   [si],ah                                         
+              mov   [si+1],al                                       
+              pop   si                                              
+              pop   ax                                              
+              ret                                                   
+                                                                    
+Which is true about the subroutine's operation.                     
+A. The high and low bytes will be swapped for all values of the     
+   memory data word.                                                
+B. The high and low bytes will be swapped only if both bytes of     
+   the memory data word are in the range of hex 00-7F.              
+C. The high and low bytes will be swapped only if both bytes of     
+   the memory data word are in the range of hex 80-FF.              
+D. The high and low bytes will be swapped only if both bytes of     
+   the memory data word have the same value.                        
+
+
+CODE=CDAEF       
+End of file
+-
